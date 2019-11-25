@@ -86,6 +86,16 @@ public class VisualWebPageView {
 		
 	    VisualWebPageView.initFireFox();
 		VisualWebPageView.doJob();
+		//VisualWebPageView.singleVisit("http://reikalingaaukle.lt");
+	}
+
+
+	private static void singleVisit(String webSiteUrl) {
+		
+		if(!HTMLFetcher.ignorWords.contains(webSiteUrl)) {
+			driver.get(webSiteUrl);
+			System.out.println(webSiteUrl);
+		}
 	}
 	
 }

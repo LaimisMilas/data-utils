@@ -32,7 +32,7 @@ public class HTMLFetcher {
 	public static int sleep = 2000;
 	private static boolean LOGGING = false;
 	
-	public static String ignorWords = "maerskline.com  csc-crewing.com";
+	public static String ignorWords = "maerskline.com  csc-crewing.com interactio.io";
 
 	public static void doStuff() {
 		// selects all from company_info
