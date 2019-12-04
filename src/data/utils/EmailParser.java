@@ -3,7 +3,7 @@ package data.utils;
 import java.util.HashMap;
 import java.util.List;
 
-import mariadb.InfoDAO;
+import mariadb.CompanyInfoDAO;
 
 public class EmailParser {
 	
@@ -17,7 +17,7 @@ public class EmailParser {
 
 		try {
 
-			List<HashMap<String, Object>> companys = InfoDAO.selectAll();
+			List<HashMap<String, Object>> companys = CompanyInfoDAO.selectAll();
 
 			for (int a = 0; a < companys.size(); a++) {
 
@@ -67,7 +67,7 @@ public class EmailParser {
 
 				String domen = tmp[1].split("\n")[0].trim();
 
-				InfoDAO.updateEmail(id, userl + "@" + domen);
+				CompanyInfoDAO.updateEmail(id, userl + "@" + domen);
 
 				System.out.println(userl + "@" + domen + " id=" + id);
 
@@ -97,7 +97,7 @@ public class EmailParser {
 
 					String domen = tmp[1].split("\n")[0].trim();
 
-					InfoDAO.updateEmail(id, userl + "@" + domen);
+					CompanyInfoDAO.updateEmail(id, userl + "@" + domen);
 
 					System.out.println(userl + "@" + domen + " id=" + id);
 					

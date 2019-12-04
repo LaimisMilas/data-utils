@@ -20,7 +20,7 @@ import java.net.URL;
 import java.security.cert.Certificate;
 import java.io.*;
 import mariadb.DomainNameDAO;
-import mariadb.InfoDAO;
+import mariadb.CompanyInfoDAO;
 import utils.Utils;
 
 public class HTMLFetcher {
@@ -36,7 +36,7 @@ public class HTMLFetcher {
 
 	public static void doStuff() {
 		// selects all from company_info
-		List<HashMap<String, Object>> items = InfoDAO.selectAll();
+		List<HashMap<String, Object>> items = CompanyInfoDAO.selectAll();
 
 		if (items != null) { 
 

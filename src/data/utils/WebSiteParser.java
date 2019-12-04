@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import mariadb.InfoDAO;
+import mariadb.CompanyInfoDAO;
 import utils.StaticList;
 
 public class WebSiteParser {
@@ -16,7 +16,7 @@ public class WebSiteParser {
 
 	public static void del() {
 		// selects all from company_info
-		List<HashMap<String, Object>> items = InfoDAO.selectAll();
+		List<HashMap<String, Object>> items = CompanyInfoDAO.selectAll();
 
 		if (items != null) {
 
@@ -34,9 +34,9 @@ public class WebSiteParser {
 						
 						if (webSiteUrl != null 
 								&& !webSiteUrl.isEmpty()
-								&& !InfoDAO.findByWebSiteUrl(webSiteUrl)) {
+								&& !CompanyInfoDAO.findByWebSiteUrl(webSiteUrl)) {
 
-							int result = InfoDAO.updateWebSiteUrl(id, webSiteUrl);
+							int result = CompanyInfoDAO.updateWebSiteUrl(id, webSiteUrl);
 
 							System.out.println("Result: " + result);
 

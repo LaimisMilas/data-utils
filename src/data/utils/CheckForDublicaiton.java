@@ -3,7 +3,7 @@ package data.utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import mariadb.InfoDAO;
+import mariadb.CompanyInfoDAO;
 
 public class CheckForDublicaiton {
 
@@ -11,7 +11,7 @@ public class CheckForDublicaiton {
 
 	public static void deleteDublicate(){
 		
-		List<HashMap<String, Object>> items = InfoDAO.selectAll();
+		List<HashMap<String, Object>> items = CompanyInfoDAO.selectAll();
 
 		if (items != null) {
 
@@ -20,7 +20,7 @@ public class CheckForDublicaiton {
 				String companyCode = (String) item.get("company_code");
 				Integer id = (Integer) item.get("id");
 				
-				List<HashMap<String, Object>> response = InfoDAO.getByCompanyCode(companyCode);
+				List<HashMap<String, Object>> response = CompanyInfoDAO.getByCompanyCode(companyCode);
 				
 				if(response.size() > 1) {
 					
@@ -32,7 +32,7 @@ public class CheckForDublicaiton {
 							
 							System.out.println("Delete " + companyCode + " "+ companyId);
 						
-							InfoDAO.delete(companyId);
+							CompanyInfoDAO.delete(companyId);
 							
 						}
 					}
@@ -46,13 +46,13 @@ public class CheckForDublicaiton {
 
 		List<String> codesForDelete = new ArrayList<String>();
 
-		List<HashMap<String, Object>> items = InfoDAO.selectAll();
+		List<HashMap<String, Object>> items = CompanyInfoDAO.selectAll();
 
 		if (items != null) {
 
 			for (HashMap<String, Object> item : items) {
 
-				List<HashMap<String, Object>> items2 = InfoDAO.selectAll();
+				List<HashMap<String, Object>> items2 = CompanyInfoDAO.selectAll();
 
 				String compnay = (String) item.get("company_code");
 
@@ -76,7 +76,7 @@ public class CheckForDublicaiton {
 
 							}
 
-							InfoDAO.delete(sId);
+							CompanyInfoDAO.delete(sId);
 
 						}
 

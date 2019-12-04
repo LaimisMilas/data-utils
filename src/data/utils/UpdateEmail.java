@@ -5,7 +5,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
-import mariadb.InfoDAO;
+import mariadb.CompanyInfoDAO;
 import mariadb.Mariadb;
 import mariadb.RekvizitaiDAO;
 
@@ -17,7 +17,7 @@ public class UpdateEmail {
 		
 		try {
 			
-			List<HashMap<String, Object>> items =  InfoDAO.selectAll();
+			List<HashMap<String, Object>> items =  CompanyInfoDAO.selectAll();
 
 			for (int a = 0; a < items.size(); a++) {
 

@@ -3,14 +3,12 @@ package data.utils;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-
-import lt.laimis.selenium.utils.SeleniumUtils;
-import mariadb.RekvizitaiDAO;
 import utils.Utils;
+import mariadb.CompanyInfoDAO;
 import mariadb.CompanyUrlDAO;
+import mariadb.RekvizitaiDAO;
 
 public class UpdateCompanyUrlStatus {
 	
@@ -33,7 +31,7 @@ public class UpdateCompanyUrlStatus {
 				int id = (int) item.get("id");
 				String companyUrl = (String) item.get("company_url");
 				
-				List<HashMap<String, Object>> list = RekvizitaiDAO.getByCompanyUrl(companyUrl);
+				List<HashMap<String, Object>> list = CompanyInfoDAO.getByCompanyUrl(companyUrl);
 				//List<HashMap<String, Object>> list = RekvizitaiDAO.getByCompanyUrlId(id);				
 				
 				if(list != null && list.size() > 0) {

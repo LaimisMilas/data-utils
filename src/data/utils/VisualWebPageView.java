@@ -8,7 +8,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import lt.laimis.selenium.utils.SeleniumUtils;
 import mariadb.DomainNameDAO;
-import mariadb.InfoDAO;
+import mariadb.CompanyInfoDAO;
 import utils.Utils;
 
 public class VisualWebPageView {
@@ -65,7 +65,7 @@ public class VisualWebPageView {
 			
 			String domainName = (String) domain.get("domain_name");
 			
-			List<HashMap<String, Object>>  rCompanys = InfoDAO.getByWebSiteUrl(domainName);
+			List<HashMap<String, Object>>  rCompanys = CompanyInfoDAO.getByWebSiteUrl(domainName);
 			
 			if(rCompanys != null && rCompanys.size() > 0) {
 				
