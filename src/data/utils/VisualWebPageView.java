@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+
+import lt.laimis.selenium.utils.SeleniumUtils;
 import mariadb.DomainNameDAO;
 import mariadb.InfoDAO;
 import utils.Utils;
@@ -44,7 +46,9 @@ public class VisualWebPageView {
 			
 			System.out.println(a + " domainStatus " + domainStatus + " " + domainProtocol + "://" + webSiteUrl);
 			
-			Utils.sleepThread(5000);
+			SeleniumUtils.scrollPageDown(1, 300, 1000, driver);
+			
+			Utils.sleepThread(4000);
 		}
 	}
 
