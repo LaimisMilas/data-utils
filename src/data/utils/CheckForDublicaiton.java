@@ -32,7 +32,7 @@ public class CheckForDublicaiton {
 							
 							System.out.println("Delete " + companyCode + " "+ companyId);
 						
-							CompanyInfoDAO.delete(companyId);
+							//CompanyInfoDAO.delete(companyId);
 							
 						}
 					}
@@ -76,7 +76,7 @@ public class CheckForDublicaiton {
 
 							}
 
-							CompanyInfoDAO.delete(sId);
+							//CompanyInfoDAO.delete(sId);
 
 						}
 
@@ -109,6 +109,11 @@ public class CheckForDublicaiton {
 
 		}
 
+	}
+	
+	public static void main(String[] args) {
+		CheckForDublicaiton cfd = new CheckForDublicaiton();
+		cfd.chechDublicatedCompanys();
 	}
 
 }
