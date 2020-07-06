@@ -5,9 +5,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
-import mariadb.CompanyInfoDAO;
-import mariadb.Mariadb;
-import mariadb.RekvizitaiDAO;
+import lt.mariadb.CompanyInfoDAO;
+import lt.mariadb.Mariadb;
+import lt.mariadb.RekvizitaiDAO;
 
 public class UpdateEmail {
 	

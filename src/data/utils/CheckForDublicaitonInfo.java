@@ -2,7 +2,7 @@ package data.utils;
 
 import java.sql.SQLException;
 import java.util.List;
-import mariadb.RekvizitaiDAO;
+import lt.mariadb.RekvizitaiDAO;
 
 public class CheckForDublicaitonInfo {
 

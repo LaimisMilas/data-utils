@@ -7,8 +7,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
 import lt.laimis.selenium.utils.SeleniumUtils;
-import mariadb.DomainNameDAO;
-import mariadb.CompanyInfoDAO;
+import lt.mariadb.DomainNameDAO;
+import lt.mariadb.CompanyInfoDAO;
 import utils.Utils;
 
 public class VisualWebPageView {

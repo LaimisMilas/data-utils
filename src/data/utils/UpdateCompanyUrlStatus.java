@@ -6,9 +6,9 @@ import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import utils.Utils;
-import mariadb.CompanyInfoDAO;
-import mariadb.CompanyUrlDAO;
-import mariadb.RekvizitaiDAO;
+import lt.mariadb.CompanyInfoDAO;
+import lt.mariadb.CompanyUrlDAO;
+import lt.mariadb.RekvizitaiDAO;
 
 public class UpdateCompanyUrlStatus {
 	

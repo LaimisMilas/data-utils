@@ -19,8 +19,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.cert.Certificate;
 import java.io.*;
-import mariadb.DomainNameDAO;
-import mariadb.CompanyInfoDAO;
+import lt.mariadb.DomainNameDAO;
+import lt.mariadb.CompanyInfoDAO;
 import utils.Utils;
 
 public class HTMLFetcher {

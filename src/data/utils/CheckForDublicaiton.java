@@ -3,7 +3,7 @@ package data.utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import mariadb.CompanyInfoDAO;
+import lt.mariadb.CompanyInfoDAO;
 
 public class CheckForDublicaiton {
 
