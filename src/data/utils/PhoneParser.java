@@ -2,12 +2,18 @@ package data.utils;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import lt.mariadb.CompanyInfoDAO;
 import lt.mariadb.PhoneNumberDAO;
 import lt.mariadb.RelationLinkDAO;
 
 public class PhoneParser {
+	
+	static int counter = 0;
+	static int counter1 = 0;
+	static int counter2 = 0;
 	
 	public static void main(String[] args) {
 		
@@ -22,22 +28,79 @@ public class PhoneParser {
 			List<HashMap<String, Object>> companys = CompanyInfoDAO.selectAll();
 
 			for (int a = 0; a < companys.size(); a++) {
+				
+				counter1 ++;
 
 				HashMap<String, Object> company = companys.get(a);
 
 				String companyUrl = (String) company.get("company_url");
 				Integer status = (Integer) company.get("status");
 				
+				if(status == 125 || status == 126 || companyUrl == null) {
+					
+					continue;
+					
+				}
+				
 
-				if (status != 125 && status != 126 &&  companyUrl != null && companyUrl.contains("abalt.lt")) {
+				if (companyUrl.contains("abalt.lt")) {
 
-					parseAbalLTPhone(company);
+					//parseAbalLTPhone(company);
 
 					continue;
 
+				} else if(companyUrl.contains("info.lt")) {
+					
+					//counter2 ++ ;
+					
+					//parseInfoLTPhone(company);
+					
+					continue;
+					
+				} else if(companyUrl.contains("rekvizitai.")) {
+					
+					counter2 ++ ;
+					//System.out.println(companyUrl);
+					parseRekvizitaiLTPhone(company);
+					
+					continue;
+					
+				} else if(companyUrl.contains("visalietuva.lt")) {
+					
+					//counter2 ++ ;
+					
+					//parseInfoLTPhone(company);
+					//System.out.println(companyUrl);
+					continue;
+					
+				} else if(companyUrl.contains("imones.lt")) {
+					
+					//counter2 ++ ;
+					//System.out.println(companyUrl);
+					//parseInfoLTPhone(company);
+					
+					continue;
+					
+				} else if(companyUrl.contains("medicina.lt")) {
+					
+					//counter2 ++ ;
+					
+					//parseInfoLTPhone(company);
+					
+					continue;
+					
+				}    	
+				
+				else {
+					
+					// System.out.println(companyUrl);
 				}
 
 			}
+			
+			 System.out.println("counter: " + counter);
+			 System.out.println("counter1: " + counter1);
+			 System.out.println("counter2: " + counter2);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -45,32 +108,135 @@ public class PhoneParser {
 
 	}
 
-	private static void parseInfoLTEmail(HashMap<String, Object> company) {
+	
+	private static void parseRekvizitaiLTPhone(HashMap<String, Object> company) {
 
-		Integer id = (Integer) company.get("id");
+		Long companyId = (Long) company.get("id");
 
 		String rawContacts = (String) company.get("raw_contacts");
+		String log = "";
+		
+		System.out.println(rawContacts);
+		
+	    Pattern p = Pattern.compile("[(][0-9]\\s[0-9]*[)][\\s]*[0-9]{5}");
 
-		String email = (String) company.get("email");
+	    Matcher matcher = p.matcher(rawContacts);
+	    
+	    String phoneNumber = "";
+	    
+	    while(matcher.find()){
+	        //System.out.print(matcher.group() + ", ");
+	        phoneNumber = matcher.group();
+	    }
+	    
+	    if(phoneNumber.isEmpty()) {
+	    	 //System.out.println(rawContacts);
+	    	 //saveAsStatus125(companyId);
+	    	 return;
+	    } else {	
+	    	phoneNumber = replaceCharacters(phoneNumber);
+	    	//System.out.print(phoneNumber + ", ");
+	    	counter ++;
+	    }
+	    
+	    if(!PhoneNumberDAO.isPhoneNumberExist(phoneNumber)){
+    		log = log + " , PN not found in db";
+    		Long phoneId = PhoneNumberDAO.insert(phoneNumber, "", false);
+    		log = log + " , insert PN, phoneId=" + phoneId;
+    	 	RelationLinkDAO.insert(companyId, 0L, 0L, phoneId, 0L);
+    	 	log = log + " , insert RL";
+    	 	
+    	} else {
+    		log = log + " , PN found in db";
+    		List<HashMap<String, Object>> per = PhoneNumberDAO.seachInPhoneNumbers(phoneNumber);
+    		if(per != null && per.size() > 0) {
+    			log = log + " , per.size() > 0";
+    			HashMap<String, Object> phone = per.get(0);
+    			Long phoneId = (Long) phone.get("id");
+    			log = log + " , phoneId = " + phoneId;
+	    		if(!RelationLinkDAO.isExist(companyId, null, null, phoneId, null)) {
+	    			log = log + " , RL not found in db";
+	    			RelationLinkDAO.insert(companyId, 0L, 0L, phoneId, 0L);
+	    			log = log + " , insert RL";
+	    		} else {
+	    			log = log + " , RL found in db";
+	    		}	
+    		}
+    	};
+		
+		// imones kodui  \s[0-9]{9}\s
+		// PVM kodas \sLT[0-9]+\s
+		// "(8 345)"   [(][0-9]\s[0-9]*[)]
+		// " (8 345) 12345 " \s[(][0-9]\s[0-9]*[)][\s]*[0-9]{5}
+		// "834512345" [8][0-9]{8}
 
-		if (email.trim().length() == 0) {
+		//(\D)?(?(1)\D)
+    	System.out.println(log);
+	}
+	
+	private static void parseInfoLTPhone(HashMap<String, Object> company) {
 
-			String[] tmp = rawContacts.split("@");
+		Long companyId = (Long) company.get("id");
 
-			if (tmp.length > 1) {
+		String rawContacts = (String) company.get("raw_contacts");
+		String log = "";
+		
+		//System.out.println(rawContacts);
+		
+	    Pattern p = Pattern.compile("[(][0-9]\\s[0-9]*[)][\\s]*[0-9]{5}");
 
-				String userl = tmp[0].split("El. paštas")[1].trim();
+	    Matcher matcher = p.matcher(rawContacts);
+	    
+	    String phoneNumber = "";
+	    
+	    while(matcher.find()){
+	        //System.out.print(matcher.group() + ", ");
+	        phoneNumber = matcher.group();
+	    }
+	    
+	    if(phoneNumber.isEmpty()) {
+	    	 System.out.println(rawContacts);
+	    	 saveAsStatus125(companyId);
+	    } else {
+	    	
+	    	phoneNumber = replaceCharacters(phoneNumber);
+	    	//System.out.print(phoneNumber + ", ");
+	    	counter ++;
+	    }
+	    
+	    if(!PhoneNumberDAO.isPhoneNumberExist(phoneNumber)){
+    		log = log + " , PN not found in db";
+    		Long phoneId = PhoneNumberDAO.insert(phoneNumber, "", false);
+    		log = log + " , insert PN, phoneId=" + phoneId;
+    	 	RelationLinkDAO.insert(companyId, 0L, 0L, phoneId, 0L);
+    	 	log = log + " , insert RL";
+    	 	
+    	} else {
+    		log = log + " , PN found in db";
+    		List<HashMap<String, Object>> per = PhoneNumberDAO.seachInPhoneNumbers(phoneNumber);
+    		if(per != null && per.size() > 0) {
+    			log = log + " , per.size() > 0";
+    			HashMap<String, Object> phone = per.get(0);
+    			Long phoneId = (Long) phone.get("id");
+    			log = log + " , phoneId = " + phoneId;
+	    		if(!RelationLinkDAO.isExist(companyId, null, null, phoneId, null)) {
+	    			log = log + " , RL not found in db";
+	    			RelationLinkDAO.insert(companyId, 0L, 0L, phoneId, 0L);
+	    			log = log + " , insert RL";
+	    		} else {
+	    			log = log + " , RL found in db";
+	    		}	
+    		}
+    	};
+		
+		// imones kodui  \s[0-9]{9}\s
+		// PVM kodas \sLT[0-9]+\s
+		// "(8 345)"   [(][0-9]\s[0-9]*[)]
+		// " (8 345) 12345 " \s[(][0-9]\s[0-9]*[)][\s]*[0-9]{5}
+		// "834512345" [8][0-9]{8}
 
-				String domen = tmp[1].split("\n")[0].trim();
-
-				CompanyInfoDAO.updateEmail(id, userl + "@" + domen);
-
-				System.out.println(userl + "@" + domen + " id=" + id);
-
-			}
-
-		}
-
+		//(\D)?(?(1)\D)
+    	System.out.println(log);
 	}
 
 	private static void parseAbalLTPhone(HashMap<String, Object> company) {
@@ -106,11 +272,7 @@ public class PhoneParser {
 	    	if(phoneNumber.length() != 9) {
 	    		
 	    		log = log + " != 9, ";
-	    		
-	    		phoneNumber = phoneNumber.replace(" ", "");
-	    		phoneNumber = phoneNumber.replace("(", "");
-        		phoneNumber = phoneNumber.replace(")", "");
-        		phoneNumber = phoneNumber.replace("+", "");
+        		phoneNumber = replaceCharacters(phoneNumber);
         		log = log + phoneNumber;
         		
 	    		if(phoneNumber.length() < 9) {
@@ -210,5 +372,16 @@ public class PhoneParser {
 	// Phone data incorrect
 	private static void saveAsStatus126(Long companyId) {
 		CompanyInfoDAO.updateStatus(companyId.intValue(), 126);
+	}
+	
+	public static String replaceCharacters(String phoneNumber) {
+		
+		phoneNumber = phoneNumber.replace(" ", "");
+		phoneNumber = phoneNumber.replace("(", "");
+		phoneNumber = phoneNumber.replace(")", "");
+		phoneNumber = phoneNumber.replace("+", "");
+		phoneNumber = phoneNumber.trim();
+
+		return phoneNumber;
 	}
 }
