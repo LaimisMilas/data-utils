@@ -41,52 +41,41 @@ public class PhoneParser {
 					continue;
 					
 				}
-				
 
 				if (companyUrl.contains("abalt.lt")) {
 
+					//counter2 ++ ;
 					//parseAbalLTPhone(company);
-
 					continue;
 
 				} else if(companyUrl.contains("info.lt")) {
 					
-					//counter2 ++ ;
-					
-					//parseInfoLTPhone(company);
-					
+					counter2 ++ ;
+					parseInfoLTPhone(company);
 					continue;
 					
 				} else if(companyUrl.contains("rekvizitai.")) {
 					
-					counter2 ++ ;
-					//System.out.println(companyUrl);
-					parseRekvizitaiLTPhone(company);
-					
+					//counter2 ++ ;
+					//parseRekvizitaiLTPhone(company);
 					continue;
 					
 				} else if(companyUrl.contains("visalietuva.lt")) {
 					
 					//counter2 ++ ;
-					
 					//parseInfoLTPhone(company);
-					//System.out.println(companyUrl);
 					continue;
 					
 				} else if(companyUrl.contains("imones.lt")) {
 					
 					//counter2 ++ ;
-					//System.out.println(companyUrl);
 					//parseInfoLTPhone(company);
-					
 					continue;
 					
 				} else if(companyUrl.contains("medicina.lt")) {
 					
 					//counter2 ++ ;
-					
 					//parseInfoLTPhone(company);
-					
 					continue;
 					
 				}    	
@@ -125,52 +114,18 @@ public class PhoneParser {
 	    String phoneNumber = "";
 	    
 	    while(matcher.find()){
-	        //System.out.print(matcher.group() + ", ");
 	        phoneNumber = matcher.group();
 	    }
 	    
 	    if(phoneNumber.isEmpty()) {
-	    	 //System.out.println(rawContacts);
-	    	 //saveAsStatus125(companyId);
+	    	 saveAsStatus125(companyId);
 	    	 return;
 	    } else {	
 	    	phoneNumber = replaceCharacters(phoneNumber);
-	    	//System.out.print(phoneNumber + ", ");
 	    	counter ++;
 	    }
 	    
-	    if(!PhoneNumberDAO.isPhoneNumberExist(phoneNumber)){
-    		log = log + " , PN not found in db";
-    		Long phoneId = PhoneNumberDAO.insert(phoneNumber, "", false);
-    		log = log + " , insert PN, phoneId=" + phoneId;
-    	 	RelationLinkDAO.insert(companyId, 0L, 0L, phoneId, 0L);
-    	 	log = log + " , insert RL";
-    	 	
-    	} else {
-    		log = log + " , PN found in db";
-    		List<HashMap<String, Object>> per = PhoneNumberDAO.seachInPhoneNumbers(phoneNumber);
-    		if(per != null && per.size() > 0) {
-    			log = log + " , per.size() > 0";
-    			HashMap<String, Object> phone = per.get(0);
-    			Long phoneId = (Long) phone.get("id");
-    			log = log + " , phoneId = " + phoneId;
-	    		if(!RelationLinkDAO.isExist(companyId, null, null, phoneId, null)) {
-	    			log = log + " , RL not found in db";
-	    			RelationLinkDAO.insert(companyId, 0L, 0L, phoneId, 0L);
-	    			log = log + " , insert RL";
-	    		} else {
-	    			log = log + " , RL found in db";
-	    		}	
-    		}
-    	};
-		
-		// imones kodui  \s[0-9]{9}\s
-		// PVM kodas \sLT[0-9]+\s
-		// "(8 345)"   [(][0-9]\s[0-9]*[)]
-		// " (8 345) 12345 " \s[(][0-9]\s[0-9]*[)][\s]*[0-9]{5}
-		// "834512345" [8][0-9]{8}
-
-		//(\D)?(?(1)\D)
+		log = saveData(phoneNumber, companyId, log);
     	System.out.println(log);
 	}
 	
@@ -181,7 +136,34 @@ public class PhoneParser {
 		String rawContacts = (String) company.get("raw_contacts");
 		String log = "";
 		
-		//System.out.println(rawContacts);
+	    Pattern p = Pattern.compile("[(][0-9]\\s[0-9]*[)][\\s]*[0-9]{5}");
+
+	    Matcher matcher = p.matcher(rawContacts);
+	    
+	    String phoneNumber = "";
+	    
+	    while(matcher.find()){
+	        phoneNumber = matcher.group();
+	    }
+	    
+	    if(phoneNumber.isEmpty()) {
+	    	 saveAsStatus125(companyId);
+	    } else {
+	    	
+	    	phoneNumber = replaceCharacters(phoneNumber);
+	    	counter ++;
+	    }
+	    
+	    log = saveData(phoneNumber, companyId, log);
+	    System.out.println(log);
+	}
+
+	private static void parseAbalLTPhone(HashMap<String, Object> company) {
+
+		Long companyId = (Long) company.get("id");
+
+		String rawContacts = (String) company.get("raw_contacts");
+		String log = "";
 		
 	    Pattern p = Pattern.compile("[(][0-9]\\s[0-9]*[)][\\s]*[0-9]{5}");
 
@@ -190,35 +172,37 @@ public class PhoneParser {
 	    String phoneNumber = "";
 	    
 	    while(matcher.find()){
-	        //System.out.print(matcher.group() + ", ");
 	        phoneNumber = matcher.group();
 	    }
 	    
 	    if(phoneNumber.isEmpty()) {
-	    	 System.out.println(rawContacts);
 	    	 saveAsStatus125(companyId);
 	    } else {
 	    	
 	    	phoneNumber = replaceCharacters(phoneNumber);
-	    	//System.out.print(phoneNumber + ", ");
 	    	counter ++;
 	    }
 	    
-	    if(!PhoneNumberDAO.isPhoneNumberExist(phoneNumber)){
-    		log = log + " , PN not found in db";
-    		Long phoneId = PhoneNumberDAO.insert(phoneNumber, "", false);
-    		log = log + " , insert PN, phoneId=" + phoneId;
-    	 	RelationLinkDAO.insert(companyId, 0L, 0L, phoneId, 0L);
-    	 	log = log + " , insert RL";
-    	 	
-    	} else {
-    		log = log + " , PN found in db";
-    		List<HashMap<String, Object>> per = PhoneNumberDAO.seachInPhoneNumbers(phoneNumber);
-    		if(per != null && per.size() > 0) {
-    			log = log + " , per.size() > 0";
-    			HashMap<String, Object> phone = per.get(0);
-    			Long phoneId = (Long) phone.get("id");
-    			log = log + " , phoneId = " + phoneId;
+	    log = saveData(phoneNumber, companyId, log);
+	    System.out.println(log);
+
+	}
+	
+	private static String saveData(String phoneNumber, Long companyId, String log) {
+		if(!PhoneNumberDAO.isPhoneNumberExist(phoneNumber)){
+			log = log + " , PN not found in db";
+			Long phoneId = PhoneNumberDAO.insert(phoneNumber, "", false);
+			log = log + " , insert PN, phoneId=" + phoneId;
+		 	RelationLinkDAO.insert(companyId, 0L, 0L, phoneId, 0L);
+		 	log = log + " , insert RL";	 	
+		} else {
+			log = log + " , PN found in db";
+			List<HashMap<String, Object>> per = PhoneNumberDAO.seachInPhoneNumbers(phoneNumber);
+			if(per != null && per.size() > 0) {
+				log = log + " , per.size() > 0";
+				HashMap<String, Object> phone = per.get(0);
+				Long phoneId = (Long) phone.get("id");
+				log = log + " , phoneId = " + phoneId;
 	    		if(!RelationLinkDAO.isExist(companyId, null, null, phoneId, null)) {
 	    			log = log + " , RL not found in db";
 	    			RelationLinkDAO.insert(companyId, 0L, 0L, phoneId, 0L);
@@ -226,145 +210,11 @@ public class PhoneParser {
 	    		} else {
 	    			log = log + " , RL found in db";
 	    		}	
-    		}
-    	};
-		
-		// imones kodui  \s[0-9]{9}\s
-		// PVM kodas \sLT[0-9]+\s
-		// "(8 345)"   [(][0-9]\s[0-9]*[)]
-		// " (8 345) 12345 " \s[(][0-9]\s[0-9]*[)][\s]*[0-9]{5}
-		// "834512345" [8][0-9]{8}
-
-		//(\D)?(?(1)\D)
-    	System.out.println(log);
+			}
+		};
+		return log;
 	}
 
-	private static void parseAbalLTPhone(HashMap<String, Object> company) {
-		String rawContacts = (String) company.get("raw_contacts");
-		Long companyId = (Long) company.get("id");
-		String companyCode = (String) company.get("company_code");
-		
-	    if (!rawContacts.isEmpty() && rawContacts.contains("Tel. nr.")) {
-	    	String[] tmp = rawContacts.split("Tel. nr.");
-	    	String phoneNumber = "";
-	    	if(rawContacts.contains("El.")) {
-	            tmp = tmp[1].split("El.");
-	            phoneNumber = tmp[0];
-	        } else if (rawContacts.contains("Veiklos sritis")) {
-	            tmp = tmp[1].split("Veiklos sritis");
-	            if(tmp[0].contains("Tinklapis")) {
-	                tmp = tmp[0].split("Tinklapis");
-	                phoneNumber = tmp[0];
-	            } else {
-	            	phoneNumber = tmp[0];
-	            }
-	        } else if (rawContacts.contains("Tinklapis")) {
-	            tmp = tmp[1].split("Tinklapis");
-	            phoneNumber = tmp[0];
-	        } else {
-	        	phoneNumber = tmp[1];
-	        }
-	    	
-	    	phoneNumber = phoneNumber.trim();
-	    	
-	    	String log = phoneNumber ;
-	    	
-	    	if(phoneNumber.length() != 9) {
-	    		
-	    		log = log + " != 9, ";
-        		phoneNumber = replaceCharacters(phoneNumber);
-        		log = log + phoneNumber;
-        		
-	    		if(phoneNumber.length() < 9) {
-	    			log = log + ", leng < 9";
-        			if(phoneNumber.length() == 8 && phoneNumber.contains("846")) {
-        				log = log + ", leng == 8 && contains(\"846\"), "+ phoneNumber ;
-	        		} else {
-	        			phoneNumber = "8" + phoneNumber;
-	        			log = log + ", " + phoneNumber;
-	        			if(phoneNumber.length() < 9) {
-	        				log = log + ", length() < 9, 126 ";
-	        			}
-	        		}
-        			
-        		} else if(phoneNumber.length() > 9) {
-        			log = log + ", leng > 9";
-        			if(phoneNumber.contains("370")) {
-        				log = log + ", contains(\"370\"), ";
-        				phoneNumber = phoneNumber.replace("370", "8");
-        				log = log + phoneNumber;
-        				if(phoneNumber.length() > 9) {
-        					log = log + ", leng > 9";
-        					if(phoneNumber.contains(";")) {
-        						log = log + ", contains(\";\") ";
-        						phoneNumber = phoneNumber.split(";")[0];
-        						log = log + phoneNumber; 
-        						if(phoneNumber.length() == 9) {
-        							log = log + ", leng = 9";
-        						} else {
-        							log = log + ", leng != 9";
-        							log = log + ", 126";
-        						}
-        					} else {
-        						log = log + ", 126";
-        					}
-        					
-            			}
-        				
-        			} else {
-        				if(phoneNumber.contains(";")) {
-        					log = log + ", contains(\";\") ";
-        					String[] aTem = phoneNumber.split(";");
-        					phoneNumber = aTem[0];
-        					log = log + phoneNumber;
-        				} else {
-        					log = log + ", 126";
-        				}
-        			}
-        		}
-        	}
-	    	
-	    	log = log + " = " + phoneNumber.length();
-	    	
-	    	if(log.contains("126")) {
-	    		saveAsStatus126(companyId);
-	    		log = log + " saveAsStatus126 ";
-	    		return;
-	    	}
-	    	
-	    	if(!PhoneNumberDAO.isPhoneNumberExist(phoneNumber)){
-	    		log = log + " , PN not found in db";
-	    		Long phoneId = PhoneNumberDAO.insert(phoneNumber, "", false);
-	    		log = log + " , insert PN, phoneId=" + phoneId;
-	    	 	RelationLinkDAO.insert(companyId, 0L, 0L, phoneId, 0L);
-	    	 	log = log + " , insert RL";
-	    	 	
-	    	} else {
-	    		log = log + " , PN found in db";
-	    		List<HashMap<String, Object>> per = PhoneNumberDAO.seachInPhoneNumbers(phoneNumber);
-	    		if(per != null && per.size() > 0) {
-	    			log = log + " , per.size() > 0";
-	    			HashMap<String, Object> phone = per.get(0);
-	    			Long phoneId = (Long) phone.get("id");
-	    			log = log + " , phoneId = " + phoneId;
-		    		if(!RelationLinkDAO.isExist(companyId, null, null, phoneId, null)) {
-		    			log = log + " , RL not found in db";
-		    			RelationLinkDAO.insert(companyId, 0L, 0L, phoneId, 0L);
-		    			log = log + " , insert RL";
-		    		} else {
-		    			log = log + " , RL found in db";
-		    		}	
-	    		}
-	    	};
-	    	
-	    	System.out.println(log);
-	    	
-	    } else {
-	        saveAsStatus125(companyId);
-	    }
-	    
-	}
-	
 	// Phone not found
 	private static void saveAsStatus125(Long companyId) {
 		CompanyInfoDAO.updateStatus(companyId.intValue(), 125);
@@ -375,13 +225,11 @@ public class PhoneParser {
 	}
 	
 	public static String replaceCharacters(String phoneNumber) {
-		
 		phoneNumber = phoneNumber.replace(" ", "");
 		phoneNumber = phoneNumber.replace("(", "");
 		phoneNumber = phoneNumber.replace(")", "");
 		phoneNumber = phoneNumber.replace("+", "");
 		phoneNumber = phoneNumber.trim();
-
 		return phoneNumber;
 	}
 }
