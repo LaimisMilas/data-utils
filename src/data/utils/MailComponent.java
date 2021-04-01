@@ -8,10 +8,10 @@ import java.io.OutputStream;
 import java.net.Socket;
 
 public class MailComponent {
-
-	final static String MAIL_SERVER = "pastas.serveriai.lt";
-	final static int SMTP_PORT = 465;// 25, 465
-	final static String USER = "info@ahcode.lt";
+// 587 - serveriai.lt
+	final static String MAIL_SERVER = "serveriai.lt";
+	final static int SMTP_PORT = 587;// 25, 465, 587
+	final static String USER = "henrita@rusele.lt";
 	Socket socket = null;
 
 	public MailComponent() {
