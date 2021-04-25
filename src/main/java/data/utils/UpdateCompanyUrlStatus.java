@@ -1,8 +1,10 @@
-package main.java.data.utils;
+package data.utils;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
+
+import main.java.lt.laimis.java.utils.Utils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import lt.mariadb.CompanyInfoDAO;
@@ -26,7 +28,7 @@ public class UpdateCompanyUrlStatus {
 
 				HashMap<String, Object> item = items.get(a);
 				
-				int id = (int) item.get("id");
+				Integer id = (Integer) item.get("id");
 				String companyUrl = (String) item.get("company_url");
 				
 				List<HashMap<String, Object>> list = CompanyInfoDAO.getByCompanyUrl(companyUrl);

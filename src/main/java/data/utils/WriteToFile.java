@@ -1,4 +1,4 @@
-package main.java.data.utils;
+package data.utils;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -19,7 +19,7 @@ public class WriteToFile {
 		  System.out.println(start + ", from: " + from + ", to: " + to);
 		  while(from != to) {
 				genOneGig();
-				System.out.println("genOneGig: " + from + ", free space: " + new File("/").getFreeSpace());
+				System.out.println("genOneGig: " + from + ", free space: " + new File("/").length());
 				from ++;
 		  }
 		  System.out.println((new Date().getTime() - start)/1000);

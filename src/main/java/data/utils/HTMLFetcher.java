@@ -1,4 +1,4 @@
-package main.java.data.utils;
+package data.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -14,7 +14,7 @@ import java.net.MalformedURLException;
 
 import lt.mariadb.DomainNameDAO;
 import lt.mariadb.CompanyInfoDAO;
-import utils.Utils;
+import main.java.lt.laimis.java.utils.Utils;
 
 public class HTMLFetcher {
 
@@ -51,7 +51,7 @@ public class HTMLFetcher {
 					continue;
 				}
 
-				if (fetch && webSiteUrl != null && !webSiteUrl.trim().isEmpty()) {
+				if (fetch && webSiteUrl != null && !(webSiteUrl.trim().length() == 0)) {
 
 					Utils.sleepThread(sleep);
 
@@ -119,7 +119,7 @@ public class HTMLFetcher {
 
 		String sysLog = webSiteUrl + " ";
 
-		if (fetchResult != null && !fetchResult.trim().isEmpty()) {
+		if (fetchResult != null && !(webSiteUrl.trim().length() == 0)) {
 
 			if (fetchResult.contains("<!DOCTYPE html>")) {
 

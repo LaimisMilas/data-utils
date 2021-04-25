@@ -38,7 +38,7 @@ public class VisualWebPageView {
 			Integer domainStatus = (Integer) company.get("domain_status");
 			String domainProtocol = (String) company.get("domain_protocol");
 			
-			if(main.java.data.utils.HTMLFetcher.ignorWords.contains(webSiteUrl)) {
+			if(HTMLFetcher.ignorWords.contains(webSiteUrl)) {
 				continue;
 			}
 				
@@ -96,7 +96,7 @@ public class VisualWebPageView {
 
 	private static void singleVisit(String webSiteUrl) {
 		
-		if(!main.java.data.utils.HTMLFetcher.ignorWords.contains(webSiteUrl)) {
+		if(!HTMLFetcher.ignorWords.contains(webSiteUrl)) {
 			driver.get(webSiteUrl);
 			System.out.println(webSiteUrl);
 		}

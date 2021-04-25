@@ -1,4 +1,4 @@
-package main.java.data.utils;
+package data.utils;
 
 import java.math.BigInteger;
 import java.sql.SQLException;

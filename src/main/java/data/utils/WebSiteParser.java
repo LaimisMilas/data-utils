@@ -1,4 +1,4 @@
-package main.java.data.utils;
+package data.utils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import lt.mariadb.CompanyInfoDAO;
-import utils.StaticList;
 
 public class WebSiteParser {
 
@@ -33,7 +32,7 @@ public class WebSiteParser {
 					if (storeResult) {
 						
 						if (webSiteUrl != null 
-								&& !webSiteUrl.isEmpty()
+								&& !(webSiteUrl.trim().length() == 0)
 								&& !CompanyInfoDAO.findByWebSiteUrl(webSiteUrl)) {
 
 							int result = CompanyInfoDAO.updateWebSiteUrl(id, webSiteUrl);
