@@ -1,14 +1,12 @@
-package data.utils;
+package main.java.data.utils;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import utils.Utils;
 import lt.mariadb.CompanyInfoDAO;
 import lt.mariadb.CompanyUrlDAO;
-import lt.mariadb.RekvizitaiDAO;
 
 public class UpdateCompanyUrlStatus {
 	

@@ -6,6 +6,7 @@
     <groupId>com.laimis.milas</groupId>
     <artifactId>data-utis</artifactId>
     <version>0.0.1</version>
+    <packaging>jar</packaging>
     <properties>
         <lombok.version>1.18.4</lombok.version>
         <ignite.version>2.7.6</ignite.version>
@@ -21,17 +22,31 @@
             <artifactId>feign-jackson</artifactId>
             <version>9.6.0</version>
         </dependency>
+        <dependency>
+            <groupId>lt.laimis.milas</groupId>
+            <artifactId>storage-module</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>lt.laimis.milas</groupId>
+            <artifactId>selenium-utils</artifactId>
+            <version>0.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>lt.laimis.milas</groupId>
+            <artifactId>java-utils</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>8</source>
-                    <target>8</target>
-                </configuration>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.8.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 </project>

@@ -3,13 +3,13 @@ package data.utils;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 import lt.laimis.selenium.utils.SeleniumUtils;
+import main.java.lt.laimis.java.utils.Utils;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import lt.mariadb.DomainNameDAO;
 import lt.mariadb.CompanyInfoDAO;
-import utils.Utils;
 
 public class VisualWebPageView {
 	
@@ -38,7 +38,7 @@ public class VisualWebPageView {
 			Integer domainStatus = (Integer) company.get("domain_status");
 			String domainProtocol = (String) company.get("domain_protocol");
 			
-			if(HTMLFetcher.ignorWords.contains(webSiteUrl)) {
+			if(main.java.data.utils.HTMLFetcher.ignorWords.contains(webSiteUrl)) {
 				continue;
 			}
 				
@@ -72,7 +72,7 @@ public class VisualWebPageView {
 				HashMap<String, Object> rCompany = rCompanys.get(0);
 				
 				rCompany.put("domain_name",(String) domain.get("domain_name"));
-				rCompany.put("domain_status",(int) domain.get("status"));
+				rCompany.put("domain_status",(String) domain.get("status"));
 				rCompany.put("domain_protocol",(String) domain.get("protocol"));
 				
 				companys.add(rCompany);
@@ -96,7 +96,7 @@ public class VisualWebPageView {
 
 	private static void singleVisit(String webSiteUrl) {
 		
-		if(!HTMLFetcher.ignorWords.contains(webSiteUrl)) {
+		if(!main.java.data.utils.HTMLFetcher.ignorWords.contains(webSiteUrl)) {
 			driver.get(webSiteUrl);
 			System.out.println(webSiteUrl);
 		}

@@ -1,8 +1,7 @@
-package data.utils;
+package main.java.data.utils;
 
 import java.sql.SQLException;
 import java.util.List;
-import lt.mariadb.RekvizitaiDAO;
 
 public class CheckForDublicaitonInfo {
 
