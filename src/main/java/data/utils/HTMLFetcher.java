@@ -2,26 +2,19 @@ package data.utils;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
-import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
 import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLPeerUnverifiedException;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLPeerUnverifiedException;
 import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.cert.Certificate;
-import java.io.*;
+
 import lt.mariadb.DomainNameDAO;
 import lt.mariadb.CompanyInfoDAO;
-import utils.Utils;
+import main.java.lt.laimis.java.utils.Utils;
 
 public class HTMLFetcher {
 
@@ -58,7 +51,7 @@ public class HTMLFetcher {
 					continue;
 				}
 
-				if (fetch && webSiteUrl != null && !webSiteUrl.trim().isEmpty()) {
+				if (fetch && webSiteUrl != null && !(webSiteUrl.trim().length() == 0)) {
 
 					Utils.sleepThread(sleep);
 
@@ -126,7 +119,7 @@ public class HTMLFetcher {
 
 		String sysLog = webSiteUrl + " ";
 
-		if (fetchResult != null && !fetchResult.trim().isEmpty()) {
+		if (fetchResult != null && !(webSiteUrl.trim().length() == 0)) {
 
 			if (fetchResult.contains("<!DOCTYPE html>")) {
 

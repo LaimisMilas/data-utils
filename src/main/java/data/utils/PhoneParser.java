@@ -117,7 +117,7 @@ public class PhoneParser {
 	        phoneNumber = matcher.group();
 	    }
 	    
-	    if(phoneNumber.isEmpty()) {
+	    if(phoneNumber.length() == 0) {
 	    	 saveAsStatus125(companyId);
 	    	 return;
 	    } else {	
@@ -146,7 +146,7 @@ public class PhoneParser {
 	        phoneNumber = matcher.group();
 	    }
 	    
-	    if(phoneNumber.isEmpty()) {
+	    if(phoneNumber.length() == 0) {
 	    	 saveAsStatus125(companyId);
 	    } else {
 	    	
@@ -175,7 +175,7 @@ public class PhoneParser {
 	        phoneNumber = matcher.group();
 	    }
 	    
-	    if(phoneNumber.isEmpty()) {
+	    if(phoneNumber.length() == 0) {
 	    	 saveAsStatus125(companyId);
 	    } else {
 	    	
