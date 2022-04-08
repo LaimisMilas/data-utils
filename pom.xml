@@ -37,6 +37,12 @@
             <artifactId>java-utils</artifactId>
             <version>0.0.1</version>
         </dependency>
+        <dependency>
+            <groupId>lt.laimis.milas</groupId>
+            <artifactId>selenium-utils</artifactId>
+            <version>0.0.2</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
     <build>
         <pluginManagement>

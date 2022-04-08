@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import lt.laimis.selenium.utils.PageUtils;
 import lt.laimis.selenium.utils.SeleniumUtils;
 import main.java.lt.laimis.java.utils.Utils;
 import org.openqa.selenium.WebDriver;
@@ -46,7 +47,7 @@ public class VisualWebPageView {
 			
 			System.out.println(a + " domainStatus " + domainStatus + " " + domainProtocol + "://" + webSiteUrl);
 			
-			SeleniumUtils.scrollPageDown(1, 300, 1000, driver);
+			PageUtils.scrollPageDown(1, 300, 1000, driver);
 			
 			Utils.sleepThread(4000);
 		}
