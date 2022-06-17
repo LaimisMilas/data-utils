@@ -18,7 +18,7 @@ public class VisualWebPageView {
 	
 	// pasiims sarasa kompaniju ir ciklu per visas atidarines ju puslapius.
 	// cia yra rekvizitu puslapis kur galima nuskaityti detalesne kompanijos informacija
-	public static void multipleVisits() {
+	public static void multipleVisits() throws Exception  {
 		List<HashMap<String, Object>> companies = getCompanies();
 		for (int a = 0; a < companies.size(); a++) {
 			HashMap<String, Object> company = companies.get(a);
@@ -65,8 +65,12 @@ public class VisualWebPageView {
 	public static void main(String[] args) {
 		SeleniumUtils.setGeckoDriver();
 		driver = SeleniumUtils.initFireFox("");
-		VisualWebPageView.multipleVisits();
-		//VisualWebPageView.singleVisit("http://reikalingaaukle.lt");
+		try {
+			VisualWebPageView.multipleVisits();
+			//VisualWebPageView.singleVisit("http://reikalingaaukle.lt");
+		} catch (Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	private static void singleVisit(String webSiteUrl) {
