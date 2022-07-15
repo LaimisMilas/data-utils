@@ -7,8 +7,8 @@ import java.util.List;
 import main.java.lt.laimis.java.utils.Utils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import lt.mariadb.CompanyInfoDAO;
-import lt.mariadb.CompanyUrlDAO;
+import lt.laimis.mariadb.CompanyInfoDAO;
+import lt.laimis.mariadb.CompanyUrlDAO;
 
 public class UpdateCompanyUrlStatus {
 	

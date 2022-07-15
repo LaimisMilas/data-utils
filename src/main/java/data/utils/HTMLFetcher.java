@@ -12,8 +12,8 @@ import java.util.Scanner;
 import javax.net.ssl.HttpsURLConnection;
 import java.net.MalformedURLException;
 
-import lt.mariadb.DomainNameDAO;
-import lt.mariadb.CompanyInfoDAO;
+import lt.laimis.mariadb.DomainNameDAO;
+import lt.laimis.mariadb.CompanyInfoDAO;
 import main.java.lt.laimis.java.utils.Utils;
 
 public class HTMLFetcher {

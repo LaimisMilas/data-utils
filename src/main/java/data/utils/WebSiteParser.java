@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.StringTokenizer;
 
-import lt.mariadb.CompanyInfoDAO;
+import lt.laimis.mariadb.CompanyInfoDAO;
 
 public class WebSiteParser {
 

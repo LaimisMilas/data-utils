@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import lt.mariadb.CompanyInfoDAO;
-import lt.mariadb.PhoneNumberDAO;
-import lt.mariadb.RelationLinkDAO;
+import lt.laimis.mariadb.CompanyInfoDAO;
+import lt.laimis.mariadb.PhoneNumberDAO;
+import lt.laimis.mariadb.RelationLinkDAO;
 
 public class PhoneParser {
 	

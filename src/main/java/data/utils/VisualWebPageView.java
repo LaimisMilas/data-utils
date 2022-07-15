@@ -8,9 +8,8 @@ import lt.laimis.selenium.utils.PageUtils;
 import lt.laimis.selenium.utils.SeleniumUtils;
 import main.java.lt.laimis.java.utils.Utils;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import lt.mariadb.DomainNameDAO;
-import lt.mariadb.CompanyInfoDAO;
+import lt.laimis.mariadb.DomainNameDAO;
+import lt.laimis.mariadb.CompanyInfoDAO;
 
 public class VisualWebPageView {
 	
